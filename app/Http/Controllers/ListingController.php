@@ -119,8 +119,10 @@ class ListingController extends Controller
      * @param  \App\Listing  $listing
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Listing $listing)
+    public function destroy($id)
     {
-        //
+        $listing=Listing::findOrFail($id);
+        $listing->delete();
+        return redirect('/dashboard')->with('status','Listing Deleted !!');
     }
 }

@@ -22,7 +22,11 @@
                             <td>{{$l->name}}</td>
                             <td><a href="/listings/{{$l->id}}/edit" class="btn btn-warning btn-xs">Edit listing</a></td>
                             <td>
-                                
+                                {!!Form::open(['action'=>['ListingController@destroy',$l->id],'method'=>'POST','onsubmit'=>'return confirm("Are you sure ?")'])!!}
+                                     {{Form::hidden('_method','DELETE')}}
+
+                                {{Form::bsSubmit('Delete Listing',['class'=>'btn btn-danger btn-xs'])}}
+                           {!!Form::close()!!}
                             </td>
                             
                         </tr>
