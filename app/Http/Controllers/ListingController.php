@@ -24,7 +24,7 @@ class ListingController extends Controller
      */
     public function create()
     {
-        //
+        return view('listings.create');
     }
 
     /**
@@ -35,7 +35,26 @@ class ListingController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $user_id=auth()->user()->id;
+        $rules=[
+            'name'=>'required',
+            'email'=>'email',
+            /*'website'=>'required',
+            'phone'=>'required',
+            'address'=>'required',
+            'bio'=>'required',*/
+        ];
+        $this->validate($request,$rules);
+        $l=new Listing();
+        $l->name=$request->name;
+        $l->email=$request->email;
+        $l->website=$request->website;
+        $l->address=$request->address;
+        $l->phone=$request->phone;
+        $l->bio=$request->bio;
+        $l->user_id=$user_id;
+        $l->save();
+        return redirect()->back()->with('status','Listing Created !!');
     }
 
     /**
