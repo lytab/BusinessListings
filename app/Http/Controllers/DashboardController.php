@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\User;
 
 class DashboardController extends Controller
 {
@@ -23,6 +24,7 @@ class DashboardController extends Controller
      */
     public function index()
     {
-        return view('dashboard');
+        $user=auth()->user();
+        return view('dashboard')->with('listings',$user->listings);
     }
 }
