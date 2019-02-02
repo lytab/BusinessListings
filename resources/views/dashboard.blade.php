@@ -20,8 +20,10 @@
                        @foreach ($listings as $l)
                         <tr>
                             <td>{{$l->name}}</td>
-                            <td></td>
-                            <td></td>
+                            <td><a href="/listings/{{$l->id}}/edit" class="btn btn-warning btn-xs">Edit listing</a></td>
+                            <td>
+                                
+                            </td>
                             
                         </tr>
                         @endforeach

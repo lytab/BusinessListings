@@ -74,9 +74,12 @@ class ListingController extends Controller
      * @param  \App\Listing  $listing
      * @return \Illuminate\Http\Response
      */
-    public function edit(Listing $listing)
+    public function edit($id)
     {
-        //
+        $listing=Listing::findOrFail($id);
+        return view('listings.edit')->with('listing',$listing);
+
+        
     }
 
     /**
@@ -86,9 +89,28 @@ class ListingController extends Controller
      * @param  \App\Listing  $listing
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Listing $listing)
+    public function update(Request $request, $id)
     {
-        //
+       
+        $rules=[
+            'name'=>'required',
+            'email'=>'email',
+            /*'website'=>'required',
+            'phone'=>'required',
+            'address'=>'required',
+            'bio'=>'required',*/
+        ];
+        $this->validate($request,$rules);
+        $l=Listing::findOrFail($id);
+        $l->name=$request->name;
+        $l->email=$request->email;
+        $l->website=$request->website;
+        $l->address=$request->address;
+        $l->phone=$request->phone;
+        $l->bio=$request->bio;
+        $l->user_id=auth()->user()->id;
+        $l->save();
+        return redirect()->back()->with('status','Listing Updated !!');
     }
 
     /**
