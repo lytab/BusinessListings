@@ -12,9 +12,14 @@ class ListingController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    public function __construct()
+    {
+        $this->middleware('auth',['except'=>['index','show']]);
+    }
     public function index()
     {
-        $listings=Listing::all();
+        $listings=Listing::orderBy('created_at','desc')->get();
+        return view('listings.index')->with('listings',$listings);
     }
 
     /**
@@ -63,9 +68,10 @@ class ListingController extends Controller
      * @param  \App\Listing  $listing
      * @return \Illuminate\Http\Response
      */
-    public function show(Listing $listing)
+    public function show($id)
     {
-        //
+        $listing=Listing::findOrFail($id);
+        return view('listings.show')->with('listing',$listing);
     }
 
     /**
